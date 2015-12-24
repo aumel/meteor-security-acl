@@ -11,8 +11,7 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.1.0.2');
-  //api.versionsFrom('1.2');
+  api.versionsFrom('1.2');
   api.addFiles('src/utils/utils.js');
   api.addFiles('src/utils/cycle.js');
   api.addFiles('src/security-acl.js');
@@ -33,7 +32,6 @@ Package.onUse(function(api) {
   api.addFiles('src/voter/acl-voter.js');
   api.addFiles('src/authorization-checker/authorization-checker.js');
   api.use('mongo', ['client', 'server']);
-  //api.use('accounts-base');
   api.use('underscore');
   api.export('SecurityAcl');
 });
