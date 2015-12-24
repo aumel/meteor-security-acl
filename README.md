@@ -1,4 +1,4 @@
-# SecurityAcl for Meteor
+# SecurityAcl for Meteor [![Build Status](https://travis-ci.org/aumel/meteor-security-acl.svg?branch=master)](https://travis-ci.org/aumel/meteor-security-acl)
 
 An Access Control List (ACL) security system for meteor compatible with built-in accounts package.
 
