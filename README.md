@@ -190,7 +190,7 @@ Meteor.methods({
     var post = Posts.findOne(postId);
 
     var authorizationChecker = new SecurityAcl.AuthorizationChecker();
-    if (false ==== authorizationChecker.isGranted('EDIT', post)) {
+    if (false === authorizationChecker.isGranted('EDIT', post)) {
       throw new Meteor.Error("not-authorized");
     }
   }
@@ -242,7 +242,7 @@ Meteor.methods({
     var oid = new SecurityAcl.objectIdentityFromDomainObject(post);
     var fieldTitle = new SecurityAcl.FieldVote(oid, 'title');
 
-    if (false ==== authorizationChecker.isGranted('EDIT', fieldTitle)) {
+    if (false === authorizationChecker.isGranted('EDIT', fieldTitle)) {
       throw new Meteor.Error("not-authorized");
     }
 
@@ -293,7 +293,7 @@ Meteor.methods({
     // class identity (or domain object identity)
     var postsIdentity = new SecurityAcl.ObjectIdentity('class', 'posts');
 
-    if (false ==== authorizationChecker.isGranted('CREATE', postsIdentity)) {
+    if (false === authorizationChecker.isGranted('CREATE', postsIdentity)) {
       throw new Meteor.Error("not-authorized");
     }
 
@@ -344,7 +344,7 @@ Meteor.methods({
     var postsIdentity = new SecurityAcl.ObjectIdentity('class', 'posts');
     var fieldTitle = new SecurityAcl.FieldVote(postIdentity, 'title');
 
-    if (false ==== authorizationChecker.isGranted('EDIT', fieldTitle)) {
+    if (false === authorizationChecker.isGranted('EDIT', fieldTitle)) {
       throw new Meteor.Error("not-authorized");
     }
 
@@ -428,7 +428,7 @@ var authorizationChecker = new SecurityAcl.AuthorizationChecker();
 // class identity (or domain object identity)
 var commentsIdentity = new SecurityAcl.ObjectIdentity('class', 'comments');
 
-if (false ==== authorizationChecker.isGranted('EDIT', commentsIdentity)) {
+if (false === authorizationChecker.isGranted('EDIT', commentsIdentity)) {
   throw new Meteor.Error("not-authorized");
 }
 ```
@@ -470,7 +470,7 @@ var authorizationChecker = new SecurityAcl.AuthorizationChecker();
 // add manually your authenticated user.
 var authorizationChecker.setAuthenticatedUser(user);
 
-if (false ==== authorizationChecker.isGranted('EDIT', post)) {
+if (false === authorizationChecker.isGranted('EDIT', post)) {
   throw new Meteor.Error("not-authorized");
 }
 
