@@ -13,9 +13,9 @@ var transformUser = function (doc) {
   return doc;
 };
 
-if (Meteor.users !== 'undefined' &&
-    Meteor.users.find !== 'undefined' &&
-    Meteor.users.findOne !== 'undefined') {
+if (typeof Meteor.users !== 'undefined' &&
+    typeof Meteor.users.find !== 'undefined' &&
+    typeof Meteor.users.findOne !== 'undefined') {
   //keep references to the original functions
   var find = Meteor.users.find;
   var findOne = Meteor.users.findOne;
@@ -38,8 +38,6 @@ if (Meteor.users !== 'undefined' &&
 
 
 // FIXME add indexes to collections
-//Create default indexes for roles collection
-//Meteor.roles._ensureIndex('name', {unique: 1})
 
 // create the collections
 /**
@@ -51,8 +49,6 @@ SecurityAcl.Classes = new Mongo.Collection("acl_classes", {
   _preventAutopublish: true
 });
 
-//SecurityAcl.Classes.insert({});
-
 /**
  * @summary A [Mongo.Collection](#collections) containing acl_object_identities documents.
  * @type {Mongo.Collection}
@@ -61,8 +57,6 @@ SecurityAcl.ObjectIdentities = new Mongo.Collection("acl_object_identities", {
   idGeneration: 'MONGO',
   _preventAutopublish: true
 });
-
-//SecurityAcl.ObjectIdentities.insert({});
 
 /**
  * @summary A [Mongo.Collection](#collections) acl_object_identities_ancestors documents.
@@ -73,8 +67,6 @@ SecurityAcl.ObjectIdentitiesAncestors = new Mongo.Collection("acl_object_ancesto
   _preventAutopublish: true
 });
 
-//SecurityAcl.ObjectIdentitiesAncestors.insert({});
-
 /**
  * @summary A [Mongo.Collection](#collections) acl_entries documents.
  * @type {Mongo.Collection}
@@ -84,8 +76,6 @@ SecurityAcl.Entries = new Mongo.Collection("acl_entries", {
   _preventAutopublish: true
 });
 
-//SecurityAcl.Entries.insert({});
-
 /**
  * @summary A [Mongo.Collection](#collections) acl_security_identities documents.
  * @type {Mongo.Collection}
@@ -94,7 +84,5 @@ SecurityAcl.SecurityIdentities = new Mongo.Collection("acl_security_identities",
   idGeneration: 'MONGO',
   _preventAutopublish: true
 });
-
-//SecurityAcl.SecurityIdentities.insert({});
 
 
