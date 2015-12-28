@@ -390,6 +390,14 @@ aclService.updateAcl(acl);
 <a name="how-to-use-role">
 ## How to use a role with the security identity
 
+First, your role system must respect some rules:
+
+* The user instance must have a roles property (`user.roles`).
+* The `user.roles` can be an array (e.g. `['moderator', 'member']`).
+* The `user.roles` can be an object literal (e.g. `{ 'tech-blog' : ['moderator'] }`)
+
+**Note:** SecurityAcl is compatible with the `alanning:roles` package.
+
 ### Creating ACL and adding ACE
 
 Imagine, you have a role system and you want users with a *moderator* role can edit all comments. SecurityAcl can manage the roles with `RoleSecurityIdentity`.
@@ -411,13 +419,27 @@ acl.insertClassAce(securityIdentity, builder.getMask());
 aclService.updateAcl(acl);
 ```
 
+If you use a role with an object literal (e.g. `{ 'tech-blog' : ['moderator'] }`), you must define `SecurityAcl.RoleSecurityIdentity` with the name of property, followed by a symbol `-` and the role.
+
+```js
+// creating an ACL with a class identity.
+var aclService = new SecurityAcl.Service();
+var acl = aclService.createAcl(new SecurityAcl.ObjectIdentity('class', 'comments'));
+
+// defining the role security identity for an object literal
+var securityIdentity = new SecurityAcl.RoleSecurityIdentity('tech-blog-moderator');
+
+// you use a builder for the permission mask
+var builder = new SecurityAcl.MaskBuilder();
+builder.add('OPERATOR');
+
+// grant operator access with classAce
+acl.insertClassAce(securityIdentity, builder.getMask());
+aclService.updateAcl(acl);
+```
+
 ### Checking access
 
-First, your role system must respect some rules:
-
-* The user instance must have a roles property (`user.roles`).
-* The `user.roles` can be an array (e.g. `['moderator', 'member']`).
-* The `user.roles` can be an object literal (e.g. `{ 'tech-blog' : ['moderator'] }`)
 
 The SecurityAcl manages automatically the role. it checks whether the user has the required role to access to the domain object.
 
