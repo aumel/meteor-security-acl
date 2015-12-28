@@ -55,6 +55,7 @@ Package.onTest(function(api) {
   api.addFiles('tests/mask-builder-tests.js', 'server');
   api.addFiles('tests/permission-map-tests.js', 'server');
   api.addFiles('tests/acl-service-tests.js', 'server');
+  api.addFiles('tests/security-identity-retrieval-strategy-tests.js', ['server']);
   api.addFiles('tests/authorization-checker-tests.js', ['server']);
   api.addFiles('tests/authorization-checker-meteor-user-tests.js', ['client', 'server']);
 });

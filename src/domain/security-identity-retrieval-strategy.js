@@ -53,15 +53,17 @@ SecurityAcl.SidRetrievalStrategy.prototype.getSecurityIdentities = function (use
         sids.push(new SecurityAcl.RoleSecurityIdentity(role));
       }
     } else if ('object' === typeof user.roles) {
-      // if roles defined with properties
-      var roles = Object.getOwnPropertyNames(user.roles);
-      for (var key in roles) {
-        if(!roles.hasOwnProperty(key)) {
+      // if roles defined with properties e.i. 'groups'
+      var groups = Object.getOwnPropertyNames(user.roles);
+      for (var key in groups) {
+        if(!groups.hasOwnProperty(key)) {
           continue;
         }
-        
-        role = roles[key];
-        sids.push(new SecurityAcl.RoleSecurityIdentity(role));
+        var group = groups[key];
+        for (i=0; i < user.roles[group].length; i++) {
+          role = group+'-'+user.roles[group][i];
+          sids.push(new SecurityAcl.RoleSecurityIdentity(role));
+        }
       }
     }
   }
