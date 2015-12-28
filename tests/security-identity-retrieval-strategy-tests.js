@@ -12,8 +12,17 @@ Tinytest.add('SecurityAcl - SidRetrievalStrategy (roles)', function (test) {
   
   var sids = sidRetrievalStrategy.getSecurityIdentities(user);
   
-  test.equal(sids[1]._role, 'moderator', 'SidRetrievalStrategy manages correctly multiple roles.');
-  test.equal(sids[2]._role, 'reviewer', 'SidRetrievalStrategy manages correctly multiple roles.');
+  var check = _.some(sids, function(c) {
+    return c._role == 'moderator'; 
+  });
+  
+  test.isTrue(check, 'moderator role exists.');
+
+  var check = _.some(sids, function(c) {
+    return c._role == 'reviewer'; 
+  });
+  
+  test.isTrue(check, 'reviwer role exists.');
 });
 
 Tinytest.add('SecurityAcl - SidRetrievalStrategy (group of roles)', function (test) {
@@ -22,7 +31,7 @@ Tinytest.add('SecurityAcl - SidRetrievalStrategy (group of roles)', function (te
   user.username = 'username';
   user.roles = { 
     'posts': ['moderator', 'reviewer'],
-    'tech-blog': ['moderator'] 
+    'tech-blog': ['moderator']
   };
   user.getClassName = function () {
     return 'users';
@@ -32,8 +41,22 @@ Tinytest.add('SecurityAcl - SidRetrievalStrategy (group of roles)', function (te
   
   var sids = sidRetrievalStrategy.getSecurityIdentities(user);
   
-  test.equal(sids[1]._role, 'posts-moderator', 'SidRetrievalStrategy manages correctly the group.');
-  test.equal(sids[2]._role, 'posts-reviewer', 'SidRetrievalStrategy manages correctly the group.');
-  test.equal(sids[3]._role, 'tech-blog-moderator', 'SidRetrievalStrategy manages correctly the group.');
+  var check = _.some(sids, function(c) {
+    return c._role == 'posts-moderator'; 
+  });
   
+  test.isTrue(check, 'posts-moderator role exists.');
+
+  var check = _.some(sids, function(c) {
+    return c._role == 'posts-reviewer'; 
+  });
+  
+  test.isTrue(check, 'posts-reviewer role exists.');
+
+  var check = _.some(sids, function(c) {
+    return c._role == 'tech-blog-moderator'; 
+  });
+  
+  test.isTrue(check, 'tech-blog-moderator exists.');
+
 });

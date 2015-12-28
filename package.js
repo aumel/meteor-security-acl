@@ -39,6 +39,7 @@ Package.onUse(function(api) {
 Package.onTest(function(api) {
   api.use('accounts-password');
   api.use('ecmascript');
+  api.use('underscore');
   api.use('tinytest');
   api.use('aumel:security-acl');
   api.use('mongo', ['client', 'server']);
