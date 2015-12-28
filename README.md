@@ -21,6 +21,7 @@ It is inspired by the PHP Symfony framework.
 * [Adding a parent ACL](#adding-parent-acl)
 * [How to use a role with the security identity](#how-to-use-role)
 * [How to use your own user system](#how-to-use-your-own-user-system)
+* [How to configure your logger](#logger)
 * [Advanced ACL concepts](#advanced-acl-concetps)
   * [Object identities](#object-identities)
   * [Security identities](#security-identities)
@@ -494,6 +495,18 @@ if (false === authorizationChecker.isGranted('EDIT', post)) {
 
 // ...
 ```
+<a name="logger">
+## How to configure your logger
+
+If you use a logger to detail the debug informations, you can configure it with the `SecurityAcl.setLogger` call. Your logger must have a debug function `logger.debug()` otherwise an error will be thrown.
+
+```js
+// ...
+SecurityAcl.setLogger(yourLogger);
+// ...
+```
+
+**Note:** Actually, the logger reports debug messages about authorization decisions.
 
 <a name="advanced-acl-concetps">
 ## Advanced ACL concepts
@@ -583,6 +596,7 @@ The built-in permission map used by SecurityAcl.
 The authorizationChecker provides a function `isGranted` for determining whether the user has the required attributes to access to the domain object. Behind this function, a mechanism of voter with an affirmative strategy is used to determine if the access is granted. The voter `SecurityAcl.AclVoter` votes to allow or to deny access using the `SecurityAcl.Acl.isGranted` and `SecurityAcl.Acl.isFieldGranted` calls. Those two functions determine whether a security identity has the required bitmasks. The `isGranted` and `isFieldGranted` calls delegate the request to a `SecurityAcl.PermissionGrantingStrategy`.
 
 The `SecurityAcl.PermissionGrantingStrategy` checks all your object-scope ACEs. If none is applicable, the class-scope ACEs will be checked. If none is applicable, then the process will be repeated with the ACEs of the parent ACL. If no parent ACL exists, an error will be thrown.
+
 
 <a name="contributing">
 ## Contributing
