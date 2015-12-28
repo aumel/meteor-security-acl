@@ -100,7 +100,12 @@ SecurityAcl.AclVoter.prototype.vote = function (user, object, attributes) {
     }
     
     var field = null;
+    var debug = null;
     if (null === object) {
+      if (null !== self._logger) {
+        debug = self._allowIfObjectIdentityUnavailable ? 'grant access' : 'abstain';
+        self._logger.debug('Object identity unavailable. Voting to '+debug+'.');
+      }
       return  self._allowIfObjectIdentityUnavailable ?
         self.ACCESS_GRANTED : self.ACCESS_ABSTAIN;
     } else if (object instanceof SecurityAcl.FieldVote) {
@@ -117,6 +122,10 @@ SecurityAcl.AclVoter.prototype.vote = function (user, object, attributes) {
       // oid for class-scope
       oid = new SecurityAcl.ObjectIdentity('class', object);
     } else if (null === self._oidRetrievalStrategy.getObjectIdentity(object)) {
+      if (null !== self._logger) {
+        debug = self._allowIfObjectIdentityUnavailable ? 'grant access' : 'abstain';
+        self._logger.debug('Object identity unavailable. Voting to '+debug+'.');
+      }
       return self._allowIfObjectIdentityUnavailable ?
         self.ACCESS_GRANTED : self.ACCESS_ABSTAIN;
     } else {
@@ -128,6 +137,9 @@ SecurityAcl.AclVoter.prototype.vote = function (user, object, attributes) {
     }
     
     if (! self.supportsClass(oid.type())) {
+      if (null !== self._logger) {
+        self._logger.debug('Domain object name not supported. Voting to abstain.');
+      }
       return self.ACCESS_ABSTAIN;
     }
     
@@ -137,18 +149,44 @@ SecurityAcl.AclVoter.prototype.vote = function (user, object, attributes) {
       var acl = self._aclService.findAcl(oid, sids);
       
       if (null === field && acl.isGranted(masks, sids, false)) {
+        if (null !== self._logger) {
+          self._logger.debug('ACL found, permission granted. Voting to grant access.');
+        }
         return self.ACCESS_GRANTED;
       } else if (null !== field && acl.isFieldGranted(field, masks, sids, false)) {
+        if (null !== self._logger) {
+          self._logger.debug('ACL found, permission granted. Voting to grant access.');
+        }
         return self.ACCESS_GRANTED;
       }
-      
+      if (null !== self._logger) {
+        self._logger.debug('ACL found, insufficient permissions. Voting to deny access.');
+      }
       return self.ACCESS_DENIED;
     } catch (e) {
       // e.error must be:
       // - acl-not-found-exception
       // - no-ace-found-exception
+      
+      if(e.error === 'acl-not-found-exception') {
+        if (null !== self._logger) {
+          self._logger.debug(
+            'No ACL found for the object identity. Voting to deny access.');
+        }
+      }
+      
+      if (e.error === 'no-ace-found-exception') {
+        if (null !== self._logger) {
+          self._logger.debug('ACL found, no ACE applicable. Voting to deny access.');
+        }
+      }
+      
       return self.ACCESS_DENIED;
     }
+  }
+  
+  if (null !== self._logger) {
+    self._logger.debug('No attribute was supported. Voting to abstain.');
   }
   
   // no attribute was supported

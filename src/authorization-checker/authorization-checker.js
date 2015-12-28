@@ -18,10 +18,11 @@ SecurityAcl.AuthorizationChecker = function () {
     
   
   self._authenticatedUser = null;
-  
+  self._logger = SecurityAcl.logger;
 };
 
 SecurityAcl.AuthorizationChecker.prototype._getVoter = function () {
+  var self = this;
   
   // get the voter
   var aclService =  new SecurityAcl.Service();
@@ -29,7 +30,8 @@ SecurityAcl.AuthorizationChecker.prototype._getVoter = function () {
   var sidRetrievalStrategy = new SecurityAcl.SidRetrievalStrategy();
   var permissionMap = new SecurityAcl.PermissionMap();
   var voter = new SecurityAcl.AclVoter(aclService, oidRetrievalStrategy,
-                                        sidRetrievalStrategy, permissionMap);
+                                       sidRetrievalStrategy, permissionMap,
+                                       self._logger);
   
   return voter;
 };

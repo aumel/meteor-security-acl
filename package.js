@@ -30,6 +30,7 @@ Package.onUse(function(api) {
   api.addFiles('src/domain/object-identity-retrieval-strategy.js');
   api.addFiles('src/voter/field-vote.js');
   api.addFiles('src/voter/acl-voter.js');
+  api.addFiles('src/authorization-checker/logger.js');
   api.addFiles('src/authorization-checker/authorization-checker.js');
   api.use('mongo', ['client', 'server']);
   api.use('underscore');
@@ -43,7 +44,7 @@ Package.onTest(function(api) {
   api.use('tinytest');
   api.use('aumel:security-acl');
   api.use('mongo', ['client', 'server']);
-
+  
   api.addFiles('tests/test-helpers.js', 'server');
   api.addFiles('tests/setup-tests.js', 'server');
   api.addFiles('tests/security-acl-tests.js', 'server');
@@ -58,5 +59,6 @@ Package.onTest(function(api) {
   api.addFiles('tests/acl-service-tests.js', 'server');
   api.addFiles('tests/security-identity-retrieval-strategy-tests.js', ['server']);
   api.addFiles('tests/authorization-checker-tests.js', ['server']);
+  api.addFiles('tests/logger-tests.js', ['server']);
   api.addFiles('tests/authorization-checker-meteor-user-tests.js', ['client', 'server']);
 });
