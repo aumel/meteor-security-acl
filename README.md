@@ -52,7 +52,7 @@ Imagine you're designing a blog application. The users can comment the posts of 
 
 In Meteor, the basic approaches are:
 
-* *using business methods*: Each `comment` instance keeps a reference to all users who have access to it. To do this, you implement a collection in MongoDB with those references and the methods to retrieve informations.
+* *using business methods*: Each `comment` instance keeps a reference to all users who have access to it. To do this, you implement a collection in MongoDB with those references and the methods to retrieve informations. You can eventually use this approach with allow/deny rules.
 * *using roles*: You use a role manager package and you add a role for each `comment` instance (ROLE_COMMENT_1, ROLE_COMMENT_2, ...).
 
 Those approaches are correct. However, there are several concerns about them:
