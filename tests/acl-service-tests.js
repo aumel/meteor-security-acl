@@ -108,7 +108,7 @@ Tinytest.add('AclService - createAcl', function (test) {
   
   test.throws(function () {
     aclService.createAcl(oid);
-  }, ' is already associated with an ACL.');
+  }, 'The oid '+oid.identifier()+' is already associated with an ACL.');
   
   SecurityAclTestHelpers.cleanUpDatabase();
   

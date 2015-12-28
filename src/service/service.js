@@ -45,7 +45,7 @@ SecurityAcl.Service.prototype.createAcl = function (oid) {
   if (null !== self.retrieveObjectIdentityPrimaryKey(oid)) {
     throw new Meteor.Error(
      'ACL-already-exists',
-     'The oid "+oid.identifier()+" is already associated with an ACL.');
+     'The oid '+oid.identifier()+' is already associated with an ACL.');
   }
   
   try {
