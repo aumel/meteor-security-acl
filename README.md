@@ -400,7 +400,7 @@ var aclService = new SecurityAcl.Service();
 var acl = aclService.createAcl(new SecurityAcl.ObjectIdentity('class', 'comments'));
 
 // retrieving the role security identity
-var securityIdentity = SecurityAcl.RoleSecurityIdentity('moderator');
+var securityIdentity = new SecurityAcl.RoleSecurityIdentity('moderator');
 
 // you use a builder for the permission mask
 var builder = new SecurityAcl.MaskBuilder();
