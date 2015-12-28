@@ -3743,6 +3743,46 @@ Tinytest.add('AuthorizationChecker - isGranted (ACL updated)', function (test) {
   
 });
 
+Tinytest.add('AuthorizationChecker - isGranted (RoleSecurityIdentity and groups)', function (test) {
+  
+  SecurityAclTestHelpers.cleanUpDatabase();
+  
+  var user = {};
+  user.username = 'username';
+  user.roles = {
+    'posts': ['moderator', 'reviewer'],
+    'tech-blog': ['moderator']
+  };
+  user.getClassName = function () {
+    return 'users';
+  };
+  
+  // creating an ACL with a class identity.
+  var aclService = new SecurityAcl.Service();
+  var acl = aclService.createAcl(new SecurityAcl.ObjectIdentity('class', 'comments'));
+
+  // defining the role security identity for an object literal
+  var securityIdentity = new SecurityAcl.RoleSecurityIdentity('tech-blog-moderator');
+
+  // you use a builder for the permission mask
+  var builder = new SecurityAcl.MaskBuilder();
+  builder.add('EDIT');
+
+  // grant operator access with classAce
+  acl.insertClassAce(securityIdentity, builder.getMask());
+  aclService.updateAcl(acl);
+  
+  // checking access
+  var authorizationChecker = new SecurityAcl.AuthorizationChecker();
+  authorizationChecker.setAuthenticatedUser(user);
+  
+  // class identity (or domain object identity)
+  var commentsIdentity = new SecurityAcl.ObjectIdentity('class', 'comments');
+  
+  test.isTrue(authorizationChecker.isGranted('EDIT', commentsIdentity), 'The authenticated user can edit a comment.');
+
+});
+
 Tinytest.add('AuthorizationChecker - isGranted (support ES6)', function (test) {
 
   // ES2015 (ES6) class
@@ -3778,6 +3818,7 @@ Tinytest.add('AuthorizationChecker - isGranted (support ES6)', function (test) {
   test.isTrue(authorizationChecker.isGranted('VIEW', classIdentity), 'The authenticated user can view a post.');
 
 });
+
 
 
 
