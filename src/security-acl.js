@@ -49,6 +49,18 @@ SecurityAcl.Classes = new Mongo.Collection("acl_classes", {
   _preventAutopublish: true
 });
 
+SecurityAcl.Classes.allow({
+  insert: function () { return false; },
+  update: function () { return false; },
+  remove: function () { return false; }
+});
+
+SecurityAcl.Classes.deny({
+  insert: function () { return true; },
+  update: function () { return true; },
+  remove: function () { return true; }
+});
+
 /**
  * @summary A [Mongo.Collection](#collections) containing acl_object_identities documents.
  * @type {Mongo.Collection}
@@ -56,6 +68,18 @@ SecurityAcl.Classes = new Mongo.Collection("acl_classes", {
 SecurityAcl.ObjectIdentities = new Mongo.Collection("acl_object_identities", {
   idGeneration: 'MONGO',
   _preventAutopublish: true
+});
+
+SecurityAcl.ObjectIdentities.allow({
+  insert: function () { return false; },
+  update: function () { return false; },
+  remove: function () { return false; }
+});
+
+SecurityAcl.ObjectIdentities.deny({
+  insert: function () { return true; },
+  update: function () { return true; },
+  remove: function () { return true; }
 });
 
 /**
@@ -67,6 +91,18 @@ SecurityAcl.ObjectIdentitiesAncestors = new Mongo.Collection("acl_object_ancesto
   _preventAutopublish: true
 });
 
+SecurityAcl.ObjectIdentitiesAncestors.allow({
+  insert: function () { return false; },
+  update: function () { return false; },
+  remove: function () { return false; }
+});
+
+SecurityAcl.ObjectIdentitiesAncestors.deny({
+  insert: function () { return true; },
+  update: function () { return true; },
+  remove: function () { return true; }
+});
+
 /**
  * @summary A [Mongo.Collection](#collections) acl_entries documents.
  * @type {Mongo.Collection}
@@ -74,6 +110,18 @@ SecurityAcl.ObjectIdentitiesAncestors = new Mongo.Collection("acl_object_ancesto
 SecurityAcl.Entries = new Mongo.Collection("acl_entries", {
   idGeneration: 'MONGO',
   _preventAutopublish: true
+});
+
+SecurityAcl.Entries.allow({
+  insert: function () { return false; },
+  update: function () { return false; },
+  remove: function () { return false; }
+});
+
+SecurityAcl.Entries.deny({
+  insert: function () { return true; },
+  update: function () { return true; },
+  remove: function () { return true; }
 });
 
 /**
@@ -85,4 +133,15 @@ SecurityAcl.SecurityIdentities = new Mongo.Collection("acl_security_identities",
   _preventAutopublish: true
 });
 
+SecurityAcl.SecurityIdentities.allow({
+  insert: function () { return false; },
+  update: function () { return false; },
+  remove: function () { return false; }
+});
+
+SecurityAcl.SecurityIdentities.deny({
+  insert: function () { return true; },
+  update: function () { return true; },
+  remove: function () { return true; }
+});
 
