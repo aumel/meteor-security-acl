@@ -153,8 +153,7 @@ Meteor.methods({
 
     // creating the ACL
     var aclService = new SecurityAcl.Service();
-    var acl = aclService.createAcl(
-      new SecurityAcl.objectIdentityFromDomainObject(post));
+    var acl = aclService.createAcl(SecurityAcl.objectIdentityFromDomainObject(post));
 
     // retrieving the security identity of the currently logged-in user
     var securityIdentity = SecurityAcl.userSecurityIdentityFromAccount(Meteor.user());
@@ -211,8 +210,7 @@ Imagine you want only restrict access to the field *'title'* of a `post`. You cr
 ```js
 // creating an ACL and adding an ACE
 var aclService = new SecurityAcl.Service();
-var acl = aclService.createAcl(
-  new SecurityAcl.objectIdentityFromDomainObject(post));
+var acl = aclService.createAcl(SecurityAcl.objectIdentityFromDomainObject(post));
 
 // retrieving the security identity of the currently logged-in user
 var securityIdentity = SecurityAcl.userSecurityIdentityFromAccount(Meteor.user());
@@ -239,7 +237,7 @@ Meteor.methods({
     // checking if logged-in user can edit 'title' of the post
     var authorizationChecker = new SecurityAcl.AuthorizationChecker();
 
-    var oid = new SecurityAcl.objectIdentityFromDomainObject(post);
+    var oid = SecurityAcl.objectIdentityFromDomainObject(post);
     var fieldTitle = new SecurityAcl.FieldVote(oid, 'title');
 
     if (false === authorizationChecker.isGranted('EDIT', fieldTitle)) {
@@ -359,7 +357,7 @@ Meteor.methods({
 You can retrieve an existing ACL with the `findACl` call. You need the object identity of your domain object to retrieve the corresponding ACL.
 
 ```js
-var oid = new SecurityAcl.objectIdentityFromDomainObject(post)
+var oid = SecurityAcl.objectIdentityFromDomainObject(post)
 // retrieve an existing ACL
 var acl = aclService.findAcl(oid);
 ```
@@ -370,14 +368,13 @@ Coming back to our first example, imagine the creator of a post can view/edit/de
 
 ```js
 // imagine you have an existing ACL for the post
-var oid = new SecurityAcl.objectIdentityFromDomainObject(post)
+var oid = SecurityAcl.objectIdentityFromDomainObject(post)
 // retrieve an existing ACL
 var postAcl = aclService.findAcl(oid);
 
 // the creator of the post can do anything on the comments of his post.
 var aclService = new SecurityAcl.Service();
-var acl = aclService.createAcl(
-  new SecurityAcl.objectIdentityFromDomainObject(comment));
+var acl = aclService.createAcl(SecurityAcl.objectIdentityFromDomainObject(comment));
 
 // when you are creating the ACL for a comment, you set the parent ACL.
 acl.setParentAcl(postAcl);
@@ -465,8 +462,7 @@ Imagine you have your own users system and you want to create an ACL with it. Yo
 ```js
 // creating the ACL
 var aclService = new SecurityAcl.Service();
-var acl = aclService.createAcl(
-  new SecurityAcl.objectIdentityFromDomainObject(post));
+var acl = aclService.createAcl(SecurityAcl.objectIdentityFromDomainObject(post));
 
 // retrieving the security identity from our own user implementation
 var securityIdentity = SecurityAcl.userSecurityIdentityFromAccount(user);
