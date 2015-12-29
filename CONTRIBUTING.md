@@ -21,7 +21,7 @@ Before submitting your contribution though, please make sure to take a moment an
 - Squash the commit if there are too many small ones.
 - Follow the [Code style](#code-style).
 - If you fix a bug or add new feature, test your changes.
-- Make sure all tests passes
+- Make sure all tests have passed.
     * `meteor test-packages ./`
     * `jshint src` (code style)
 - All the patches you are going to submit must be released under the MIT license.
