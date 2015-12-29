@@ -1,6 +1,6 @@
 Package.describe({
   name: 'aumel:security-acl',
-  version: '0.5.0',
+  version: '0.6.0',
   // Brief, one-line summary of the package.
   summary: 'An Access Control List (ACL) security system.',
   // URL to the Git repository containing the source code for this package.
@@ -44,7 +44,7 @@ Package.onTest(function(api) {
   api.use('tinytest');
   api.use('aumel:security-acl');
   api.use('mongo', ['client', 'server']);
-  
+
   api.addFiles('tests/test-helpers.js', 'server');
   api.addFiles('tests/setup-tests.js', 'server');
   api.addFiles('tests/security-acl-tests.js', 'server');
