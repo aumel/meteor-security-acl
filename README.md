@@ -95,7 +95,7 @@ The class name of an object using the class concept will be automatically retrie
 
 If the object doesn't use the class concept from ES6, it must have a function `getDomainObjectName`. This function must return an unique  *'domain name'* string.
 
-By example, if you want restrict access to documents. You must add the `getDomainObjectName` function to all documents using the `transform` function of `Mongo.Collection`.
+If you want restrict access to documents, you must add the `getDomainObjectName` function to all documents using the `transform` function of `Mongo.Collection`.
 
 ```js
 Posts = new Mongo.Collection("posts", {
@@ -131,7 +131,7 @@ Post.prototype = {
 <a name="how-to-use-the-acls">
 ## How to use the ACLs
 
-After defining your class or adding `getDomainObjectName` function, you can implement the ACL. A domain object is represented by an object identity (more informations in [Advanced ACL concepts](#advanced-acl-concetps)). Each object identity has exactly one associated ACL. Each ACL can have four different types of Access Control Entries (class ACEs, object ACEs, class field ACEs, object field ACEs). Each ACE specifies individual user or group permissions to specific objects
+After defining your class or adding `getDomainObjectName` function, you can implement the ACL. A domain object is represented by an object identity (more informations in [Advanced ACL concepts](#advanced-acl-concetps)). Each object identity has exactly one associated ACL. Each ACL can have four different types of Access Control Entries (class ACEs, object ACEs, class field ACEs, object field ACEs). Each ACE specifies individual user or group permissions to specific objects.
 
 <a name="how-to-use-object-ace">
 ### How to use the objectAce
