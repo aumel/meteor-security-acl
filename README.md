@@ -22,6 +22,7 @@ It is inspired by the PHP Symfony framework.
 * [How to use a role with the security identity](#how-to-use-role)
 * [How to use your own user system](#how-to-use-your-own-user-system)
 * [How to configure your logger](#logger)
+* [How to use in the client-side](#how-to-use-client-side)
 * [Advanced ACL concepts](#advanced-acl-concetps)
   * [Object identities](#object-identities)
   * [Security identities](#security-identities)
@@ -75,7 +76,7 @@ To restrict access to an object, the SecurityAcl needs :
 
 There are two options to get the domain object name:
 
-* using the class name from the class concept in ES6
+* using the class name from the class concept in ES6,
 * implementing a `getDomainObjectName` function in the object (or document).
 
 **Notes:**
@@ -179,7 +180,9 @@ The `insertObjectAce` call grants the logged-in user with the *OWNER* access to 
 
 ACL system uses masks for permissions. A built-in builder `SecurityAcl.MaskBuilder` allows you to build cumulative permissions easily.
 
-**NOTE:** The order of ACEs is important. You should place more specific entries at the beginning.
+At the end, the `updateAcl` call persists any changes which were made to the ACL, or any associated access control entries.
+
+**Note:** The order of ACEs is important. You should place more specific entries at the beginning.
 
 
 #### Checking the access
@@ -390,9 +393,9 @@ aclService.updateAcl(acl);
 
 First, your role system must respect some rules:
 
-* The user instance must have a roles property (`user.roles`).
+* The user instance must have a roles property (i.e. `user.roles`).
 * The `user.roles` can be an array (e.g. `['moderator', 'member']`).
-* The `user.roles` can be an object literal (e.g. `{ 'tech-blog' : ['moderator'] }`)
+* The `user.roles` can be an object literal (e.g. `{ 'tech-blog' : ['moderator'] }`).
 
 **Note:** SecurityAcl is compatible with the `alanning:roles` package.
 
@@ -478,7 +481,7 @@ aclService.updateAcl(acl);
 ```
 Your user instance must respect some rules:
 
-* The user instance must have a username property (`user.username`).
+* The user instance must have a username property (i.e. `user.username`).
 * The user instance must use the class concept or must have a `getDomainObjectName` function.
 
 When you want check the access with `SecurityAcl.AuthorizationChecker`, you must set the authenticated user manually with `setAuthenticatedUser`.
@@ -507,6 +510,13 @@ SecurityAcl.setLogger(yourLogger);
 ```
 
 **Note:** Actually, the logger reports debug messages about authorization decisions.
+
+<a name="how-to-use-client-side">
+## How to use in the client-side
+
+As the server-side, the client-side has access to all functions of SecurityAcl. It is eventually useful for creating helpers.
+
+**IMPORTANT:** The access to sensitive data must always be controlled on the server-side. Any client-side helpers cannot be trusted. Those helpers can be used for accessing to some templates if the access to data is restricted to the server-side.
 
 <a name="advanced-acl-concetps">
 ## Advanced ACL concepts
