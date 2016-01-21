@@ -521,7 +521,7 @@ As the server-side, the client-side has access to all functions of SecurityAcl. 
 <a name="advanced-acl-concetps">
 ## Advanced ACL concepts
 
-SecurityAcl is based on the concept of an access control list (ACL). Every domain object instance in your application has exactly one associated ACL. The ACL records defines who can and can't work with that domain object.
+SecurityAcl is based on the concept of an access control list (ACL). Every domain object instance in your application has exactly one associated ACL. An ACL defines who can and can't work with that domain object.
 
 <a name="object-identities">
 ### Object identities
