@@ -38,7 +38,9 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
+  api.versionsFrom('METEOR@1.4.0.1');
   api.use('accounts-password');
+  api.use('test-in-browser');
   api.use('ecmascript');
   api.use('underscore');
   api.use('tinytest');
