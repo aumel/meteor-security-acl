@@ -41,7 +41,18 @@ It is inspired by the PHP Symfony framework.
 $ meteor add aumel:security-acl
 ```
 
-SecurityAcl package is compatible with Meteor `v1.2.x` and MongoDB.
+SecurityAcl package is compatible with MongoDB and Meteor `v1.2.x`, `v1.3.x` and `v1.4.x`.
+
+**Note:** If you are using `accounts-ui` package, you must set `passwordSignupFields` with a username
+
+Example:
+```js
+Accounts.ui.config({
+  passwordSignupFields: 'USERNAME_ONLY',
+});
+```
+
+You can choose also choose `USERNAME_AND_EMAIL` or `USERNAME_AND_OPTIONAL_EMAIL`. For more info, read [this](http://docs.meteor.com/api/accounts.html#Accounts-ui-config)
 
 <a name="overview">
 ## Overview
