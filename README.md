@@ -52,7 +52,7 @@ Accounts.ui.config({
 });
 ```
 
-You can choose also choose `USERNAME_AND_EMAIL` or `USERNAME_AND_OPTIONAL_EMAIL`. For more info, read [this](http://docs.meteor.com/api/accounts.html#Accounts-ui-config)
+You can also choose `USERNAME_AND_EMAIL` or `USERNAME_AND_OPTIONAL_EMAIL`. For more info, read [this](http://docs.meteor.com/api/accounts.html#Accounts-ui-config)
 
 <a name="overview">
 ## Overview
