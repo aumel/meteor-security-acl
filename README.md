@@ -5,6 +5,7 @@ An Access Control List (ACL) security system for Meteor compatible with built-in
 It is inspired by the PHP Symfony framework.
 
 <a name="toc">
+
 ## Table of contents
 
 * [Installation](#installation)
@@ -35,6 +36,7 @@ It is inspired by the PHP Symfony framework.
 * [License](#license)
 
 <a name="installation">
+
 ## Installation
 
 ```sh
@@ -55,6 +57,7 @@ Accounts.ui.config({
 You can also choose `USERNAME_AND_EMAIL` or `USERNAME_AND_OPTIONAL_EMAIL`. For more info, read [this](http://docs.meteor.com/api/accounts.html#Accounts-ui-config)
 
 <a name="overview">
+
 ## Overview
 
 Sometimes in an application, the access decisions need to consider who is requesting the access (user) and also for what (domain object).
@@ -76,6 +79,7 @@ Those approaches are correct. However, there are several concerns about them:
 SecurityAcl can do it in a better way.
 
 <a name="domain-object">
+
 ## Domain object
 
 To restrict access to an object, the SecurityAcl needs :
@@ -95,6 +99,7 @@ There are two options to get the domain object name:
 * If you use a Model layer, the ID of the object must be accessible by `object._id`. If not, an error will be thrown.
 
 <a name="class-concept">
+
 ### Class concept in ES6
 
 The concept of class was introduced in ES6 (ES2015). SecurityAcl supports ES6.
@@ -103,6 +108,7 @@ The class name of an object using the class concept will be automatically retrie
 
 
 <a name="get-domain-object-name">
+
 ### getDomainObjectName
 
 If the object doesn't use the class concept from ES6, it must have a function `getDomainObjectName`. This function must return an unique  *'domain name'* string.
@@ -141,11 +147,13 @@ Post.prototype = {
 };
 ```
 <a name="how-to-use-the-acls">
+
 ## How to use the ACLs
 
 After defining your class or adding `getDomainObjectName` function, you can implement the ACL. A domain object is represented by an object identity (more informations in [Advanced ACL concepts](#advanced-acl-concetps)). Each object identity has exactly one associated ACL. Each ACL can have four different types of Access Control Entries (class ACEs, object ACEs, class field ACEs, object field ACEs). Each ACE specifies individual user or group permissions to specific objects.
 
 <a name="how-to-use-object-ace">
+
 ### How to use the objectAce
 
 Access Control Entries (ACEs) can have different scopes in which they apply (more informations in [Advanced ACL concepts](#advanced-acl-concetps)). One of them is the object-scope. The entries with object-scope only apply to one specific object.
@@ -213,6 +221,7 @@ Meteor.methods({
 In this code snippet, you check whether the `Meteor.user()` has the *EDIT* permission with `SecurityAcl.AuthorizationChecker` and the `isGranted` call. Internally, SecurityAcl maps the permission to several integer bitmasks, and checks whether the user has any of them.
 
 <a name="how-to-use-object-field-ace">
+
 ### How to use an objectFieldAce
 
 Access control entries (ACEs) can have different scopes in which they apply (more informations in [Advanced ACL concepts](#advanced-acl-concetps)). One of them is the object-field-scope. The entries with object-field-scope apply to a specific object, and only to a specific field of that object.
@@ -264,6 +273,7 @@ Meteor.methods({
 )};
 ```
 <a name="how-to-use-class-ace">
+
 ### How to use a classAce
 
 Access control entries (ACEs) can have different scopes in which they apply (more informations in [Advanced ACL concepts](#advanced-acl-concetps)). One of them is the class-scope. The entries with class-scope apply to all objects with the same domain object name.
@@ -317,6 +327,7 @@ Meteor.methods({
 )};
 ```
 <a name="how-to-use-class-field-ace">
+
 ### How to use a classFieldAce
 
 Access control entries (ACEs) can have different scopes in which they apply (more informations in [Advanced ACL concepts](#advanced-acl-concetps)). One of them is the class-field-scope. The entries with class-field-scope apply to all objects with the same domain object name, but only to a specific field of the objects.
@@ -367,6 +378,7 @@ Meteor.methods({
 ```
 
 <a name="retrieving-acl">
+
 ## Retrieving an existing ACL
 
 You can retrieve an existing ACL with the `findACl` call. You need the object identity of your domain object to retrieve the corresponding ACL.
@@ -377,6 +389,7 @@ var oid = SecurityAcl.objectIdentityFromDomainObject(post)
 var acl = aclService.findAcl(oid);
 ```
 <a name="adding-parent-acl">
+
 ## Adding a parent ACL
 
 Coming back to our first example, imagine the creator of a post can view/edit/delete all comments of his post. In other words, the creator has the same permissions on the comments than on his post. To do this, you can use the inheritance capacity of SecurityAcl. An ACL can inherit from a parent ACL.
@@ -400,6 +413,7 @@ aclService.updateAcl(acl);
 ```
 
 <a name="how-to-use-role">
+
 ## How to use a role with the security identity
 
 First, your role system must respect some rules:
@@ -468,6 +482,7 @@ if (false === authorizationChecker.isGranted('EDIT', commentsIdentity)) {
 ```
 
 <a name="how-to-use-your-own-user-system">
+
 ## How to use your own user system
 
 If you don't use the built-in accounts package of Meteor or if you use a Model layer over the `Meteor.user()`, SecurityAcl provides a solution to hold those situations.
@@ -510,6 +525,7 @@ if (false === authorizationChecker.isGranted('EDIT', post)) {
 // ...
 ```
 <a name="logger">
+
 ## How to configure your logger
 
 If you use a logger to detail the debug informations, you can configure it with the `SecurityAcl.setLogger` call. Your logger must have a debug function `logger.debug()` otherwise an error will be thrown.
@@ -523,6 +539,7 @@ SecurityAcl.setLogger(yourLogger);
 **Note:** Actually, the logger reports debug messages about authorization decisions.
 
 <a name="how-to-use-client-side">
+
 ## How to use in the client-side
 
 As the server-side, the client-side has access to all functions of SecurityAcl. It is eventually useful for creating helpers.
@@ -530,21 +547,25 @@ As the server-side, the client-side has access to all functions of SecurityAcl. 
 **IMPORTANT:** The access to sensitive data must always be controlled on the server-side. Any client-side helpers cannot be trusted. Those helpers can be used for accessing to some templates if the access to data is restricted to the server-side.
 
 <a name="advanced-acl-concetps">
+
 ## Advanced ACL concepts
 
 SecurityAcl is based on the concept of an access control list (ACL). Every domain object instance in your application has exactly one associated ACL. An ACL defines who can and can't work with that domain object.
 
 <a name="object-identities">
+
 ### Object identities
 
 The SecurityAcl is totally decoupled from your domain objects. To achieve this decoupling, each domain object is represented internally within the SecurityAcl by an object identity.
 
 <a name="security-identities">
+
 ### Security identities
 
 In the same way as a domain object is represented by an object identity, a user and a role are represented by a security identity.
 
 <a name="database-collection-structure">
+
 ### Database collection structure
 
 There are five main collections used by default in the implementation. The collections are ordered from least documents to most documents in a typical application:
@@ -556,6 +577,7 @@ There are five main collections used by default in the implementation. The colle
 * *acl_entries*: This collection contains all ACEs.
 
 <a name="scope-of-aces">
+
 ### Scope of ACEs
 
 Access control entries (ACEs) can have different scopes in which they apply. There are four scopes:
@@ -566,6 +588,7 @@ Access control entries (ACEs) can have different scopes in which they apply. The
 * *class-field-scope*: The entries with class-field-scope apply to all objects with the same domain object name, but only to a specific field of the objects.
 
 <a name="permissions">
+
 ### Permissions
 
 SecurityAcl uses integer bit masking. You don't need to know anything about bits shifting to use SecurityAcl.
@@ -612,6 +635,7 @@ The built-in permission map used by SecurityAcl.
 **Note:** This permission map can be replaced by another but it covers lot of situations.
 
 <a name="authorization-decisions">
+
 ### Authorization decisions
 
 The authorizationChecker provides a function `isGranted` for determining whether the user has the required attributes to access to the domain object. Behind this function, a mechanism of voter with an affirmative strategy is used to determine if the access is granted. The voter `SecurityAcl.AclVoter` votes to allow or to deny access using the `SecurityAcl.Acl.isGranted` and `SecurityAcl.Acl.isFieldGranted` calls. Those two functions determine whether a security identity has the required bitmasks. The `isGranted` and `isFieldGranted` calls delegate the request to a `SecurityAcl.PermissionGrantingStrategy`.
@@ -620,16 +644,19 @@ The `SecurityAcl.PermissionGrantingStrategy` checks all your object-scope ACEs. 
 
 
 <a name="contributing">
+
 ## Contributing
 
 Please make sure to read the [Contributing Guide](CONTRIBUTING.md) before making a pull request.
 
 <a name="changelog">
+
 ## Changelog
 
 Details changes for each release are documented in the [CHANGELOG file](CHANGELOG.md).
 
 <a name="License">
+
 ## License
 
 SecurityAcl is released under the [MIT License](LICENSE).
